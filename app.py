@@ -60,7 +60,6 @@ def main():
 
 @app.route('/api/advising/email', methods=['POST'])
 def process_email():
-    try:
         data = request.get_json()
         email_text = data.get("email", "").strip()
         if not email_text:

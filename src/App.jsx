@@ -36,7 +36,7 @@ function Chatbot() {
       } else if (!response.data.response?.rag_context) {
         text = "Sorry! No relevant data in the database.";
       }
-      setMessages((prev) => [...prev, { sender: "Bot", text: text }]);
+      setMessages((prev) => [...prev, { sender: "Bot", text }]);
     } catch (error) {
       console.error("Error:", error);
       setMessages((prev) => [
@@ -46,7 +46,7 @@ function Chatbot() {
     }
   };
 
-  // New function for processing multi-question email queries.
+  // Updated sendEmail that renders only the final combined response.
   const sendEmail = async () => {
     if (!input.trim()) return;
 
@@ -56,17 +56,18 @@ function Chatbot() {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:5000/api/advising/email",
+        "http://127.0.0.1:5000/api/advising/batch",
         { email: input },
-        { timeout: 60000 } // Longer timeout for email processing
+        { timeout: 60000 }
       );
-      let text = response.data.response;
-      if (typeof text === "string" && text.includes("An error occurred:")) {
-        text = "An error occurred processing your email. Please try again.";
+      let finalResponse = response.data.final_response;
+      if (!finalResponse || finalResponse.includes("An error occurred")) {
+        finalResponse = "An error occurred processing your email. Please try again.";
       }
-      setMessages((prev) => [...prev, { sender: "Bot", text: text }]);
+      // Render only one bot message with the final combined response.
+      setMessages((prev) => [...prev, { sender: "Bot", text: finalResponse }]);
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error processing email:", error);
       setMessages((prev) => [
         ...prev,
         { sender: "Bot", text: "Error processing email. Please try again." },
@@ -81,7 +82,6 @@ function Chatbot() {
   }, [messages]);
 
   const [chatBoxHeight, setChatBoxHeight] = useState("100%");
-
   useEffect(() => {
     const adjustHeight = () => {
       if (inputContainerRef.current) {
@@ -89,10 +89,8 @@ function Chatbot() {
         setChatBoxHeight(`calc(100% - ${inputHeight}px - 20px - 5px)`);
       }
     };
-
     adjustHeight();
     window.addEventListener("resize", adjustHeight);
-
     return () => {
       window.removeEventListener("resize", adjustHeight);
     };
@@ -100,21 +98,10 @@ function Chatbot() {
 
   return (
     <div className="chat-container">
-      <div
-        className="chat-box"
-        ref={chatBoxRef}
-        style={{ height: chatBoxHeight }}
-      >
+      <div className="chat-box" ref={chatBoxRef} style={{ height: chatBoxHeight }}>
         {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={`message ${msg.sender === "You" ? "user" : "bot"}`}
-          >
-            {msg.sender === "You" ? (
-              <div>{msg.text}</div>
-            ) : (
-              <Markdown>{msg.text}</Markdown>
-            )}
+          <div key={index} className={`message ${msg.sender === "You" ? "user" : "bot"}`}>
+            {msg.sender === "You" ? <div>{msg.text}</div> : <Markdown>{msg.text}</Markdown>}
           </div>
         ))}
       </div>
@@ -126,7 +113,6 @@ function Chatbot() {
         setSelectedSemesters={setSelectedSemesters}
         sendMessage={sendMessage}
       />
-      {/* New button to trigger the email-processing endpoint */}
       <div style={{ margin: "10px" }}>
         <button onClick={sendEmail}>Send Email</button>
       </div>

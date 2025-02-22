@@ -2,6 +2,9 @@ import requests
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from llmproxy import generate
+import sys
+sys.stdout.reconfigure(encoding='utf-8')
+
 
 app = Flask(__name__)
 CORS(app)
@@ -39,7 +42,7 @@ def main():
         8. Only use information from the provided materials — avoid assumptions.  
     """
 
-    print(f"formatted_message {formatted_message}")
+    print(f"formatted_message {formatted_message}".encode('utf-8', errors='replace').decode('utf-8'))
 
     response = generate(
         model='4o-mini',
@@ -55,6 +58,33 @@ def main():
 
     return jsonify({"response": response})
 
+@app.route('/api/advising/email', methods=['POST'])
+def process_email():
+    try:
+        data = request.get_json()
+        email_text = data.get("email", "").strip()
+        if not email_text:
+            return jsonify({"response": "Please provide an email message."}), 400
+
+        # Step 2: Extract questions from the email using the language model.
+        extraction_prompt = f"""
+        You are an assistant tasked with extracting all the distinct questions from an email.
+        Please list each question on a separate line.
+        Email:
+        {email_text}
+        """
+        extraction_response = generate(
+             model='4o-mini',
+             system=extraction_prompt,
+             query=email_text,
+             temperature=0.0,
+             lastk=0,
+             rag_usage=False,
+             session_id='ky_rag_email_extract'
+        )
+        
+        # Log the raw extraction result for debugging.
+        return extraction_response
 
 if __name__ == '__main__':
     app.run(debug=True, host='127.0.0.1', port=5000)

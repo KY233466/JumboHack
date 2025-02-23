@@ -1,0 +1,27 @@
+{
+  "name": "graphtutorial",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "../../../../Desktop/JumboHackGraph/graphtutorial/node_modules/.bin/eslint .",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^9.20.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-header": "^3.1.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "prettier": "^3.5.1"
+  },
+  "dependencies": {
+    "@azure/identity": "^4.6.0",
+    "@microsoft/microsoft-graph-client": "^3.0.7",
+    "isomorphic-fetch": "^3.0.0",
+    "readline-sync": "^1.4.10"
+  }
+}

@@ -262,7 +262,6 @@ def process_query():
 You are a chatbot responding to student questions based on provided materials.
 Please combine the following responses into one coherent, formatted response that follows this format exactly:
 
-{{Reply}}
 
 Guidelines:
 1. If no conclusion could be drawn from the information, say so. If more information from the student 

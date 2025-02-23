@@ -5,7 +5,7 @@
 import 'isomorphic-fetch';
 import { DeviceCodeCredential } from '@azure/identity';
 import { Client } from '@microsoft/microsoft-graph-client';
-// prettier-ignore
+import axios from "axios";
 import { TokenCredentialAuthenticationProvider } from
   '@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials/index.js';
 
@@ -151,7 +151,7 @@ export async function sendMailAsync(subject, body, recipient) {
   });
 }
 
-export async function editDraftEmail(id) {
+export async function editDraftEmail(id, reply) {
   // Ensure client isn't undefined
   if (!_userClient) {
     throw new Error("Graph has not been initialized for user auth");
@@ -160,7 +160,7 @@ export async function editDraftEmail(id) {
   const message = {
     body: {
       contentType: "Text",
-      content: "Helllooooo?",
+      content: reply,
     },
   };
 
@@ -169,7 +169,7 @@ export async function editDraftEmail(id) {
   await _userClient.api(path).update(message);
 }
 
-export async function replyToMessage(id) {
+export async function replyToMessage(id, content) {
   // Ensure client isn't undefined
   if (!_userClient) {
     throw new Error("Graph has not been initialized for user auth");
@@ -178,12 +178,27 @@ export async function replyToMessage(id) {
   const path = "/me/messages/" + id + "/createReply";
 
   // Send the message
-  const result = await _userClient.api(path).post({});
-  const lol = editDraftEmail(result.id);
+  const result = await _userClient.api(path).post({comment: "Generating reply..."});
+  let finalReply = "";
 
-  // console.log("draft emails", JSON.stringify(lol, null, 2));
+  try {
+    console.log("start to get reply");
+    const response = await axios.post(
+      'http://127.0.0.1:5000/api/advising/batch',{ email: content }, { timeout: 60000 }
+    );
+    let finalResponse = response.data.final_response;
+    if (!finalResponse || finalResponse.includes("An error occurred")) {
+      finalResponse = "An error occurred processing your query. Please try again.";
+    }
+    finalReply = finalResponse;
 
-  return lol;
+    console.log("reply fetched");
+
+    return editDraftEmail(result.id, finalReply);
+  } catch (error) {
+    console.error("Error processing query:", error);
+    return false;
+  }
 }
 // </SendMailSnippet>
 

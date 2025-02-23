@@ -27,13 +27,6 @@ async function main() {
   // Greet the user by name
   await greetUserAsync();
 
-  // const choices = [
-  //   'Display access token',
-  //   'List my inbox',
-  //   'Send mail',
-  //   'Make a Graph call',
-  // ];
-
   const choices = [
     "Display access token",
     "List my inbox",
@@ -96,18 +89,9 @@ async function lol() {
     const emails = emailsPage.value;
     const filteredEmails = [];
 
-    // emails.forEach((e) => {
-    //   if (
-    //     e.from?.emailAddress?.address.endsWith("@tufts.edu") &&
-    //     !e.isRead
-    //   ) {
-    //     filteredEmails.push(e);
-    //   }
-    // });
-
     emails.forEach((e) => {
       if (
-        e.from?.emailAddress?.address === "Zihan.Yang@tufts.edu" &&
+        e.from?.emailAddress?.address.endsWith("@tufts.edu") &&
         !e.isRead
       ) {
         filteredEmails.push(e);
@@ -118,10 +102,11 @@ async function lol() {
 
     if (filteredEmails.length != 0) {
       const id = filteredEmails[0].id;
+      const content = filteredEmails[0].bodyPreview;
 
       if (id) {
         console.log("send reply");
-        await replyToMessage(id);
+        await replyToMessage(id, content);
       } else {
         console.log("no id");
       }

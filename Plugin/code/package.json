@@ -21,6 +21,7 @@
   "dependencies": {
     "@azure/identity": "^4.6.0",
     "@microsoft/microsoft-graph-client": "^3.0.7",
+    "axios": "^1.7.9",
     "isomorphic-fetch": "^3.0.0",
     "readline-sync": "^1.4.10"
   }

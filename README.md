@@ -2,8 +2,8 @@
 TuftsAdvisor
 ================================================================================
 Created by: Jumbos: Into the Hackerverse (Katie Yang, Spencer Anderson,
-Hanah Kim, Emily Li, Madeline Lei,
-Tomas Maranga)
+                                          Hanah Kim, Emily Li, Madeline Lei,
+                                          Tomas Maranga)
 Presented at JumboHack 2025 under the Down the Rabbit Hole track.
 
 Our project is a two-fold solution designed to modernize academic advising.
@@ -16,12 +16,12 @@ communication.
 
 Team Member Contributions:
 
-Katie Yang:
-Spencer Anderson:
-Hanah Kim:
-Emily Li:
-Madeline Lei:
-Tomas Maranga:
+Katie Yang: 
+Spencer Anderson: Worked on retrieveing and sending emails.
+Hanah Kim: Chatbot interface.
+Emily Li: Lead Designer, created presentation.
+Madeline Lei: Working on generating responses for the chatbot
+Tomas Maranga: Working on integrating APIs, making our own api routes.
 
 ACKNOWLEDGEMENTS
 React & Flask: Robust frameworks, made our frontend/backend development smooth
@@ -29,7 +29,21 @@ Microsoft Graph: Providing seamless email integration capabilities
 RAG: Used existing RAG model
 
 REFLECTION
-<What motivated your team to choose this project?>
-<Potential future work/improvements?>
-<What is a challenge you encountered while making this?>
-<What is a fun or interesting experience you had with another hacker?>
+From lengthy, confusing degree audits to lists of major requirements, making 
+sure you are on the right path to graduate can be confusing. This leads to an
+influx of repetitive emails for academic advisors and distress for students. We
+wanted to create a solution to help students and advisors navigate their
+academic journey here at Tufts.
+
+In the future, we'd like to integrate it into an Outlook add-in with a 
+Microsoft Graph API webhook to automatically detect new emails rather than
+using a script to continuously check.
+
+Some challenges we faced:
+- Figuring out how to train the model so it consistently replies professionally
+  but not too bot like
+- Separating each question to generate a response to, and recombining the
+  responses into one email.
+- Working with unfamiliar tools
+- Setting up the environment
+- Navigating Microsoft tools / documentation 

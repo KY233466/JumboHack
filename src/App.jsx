@@ -13,35 +13,30 @@ function Chatbot() {
   const sendMessage = async () => {
     if (!input.trim()) return;
 
-    const formattedMessage = `${selectedSemesters} mean ${input}?`;
-    const userMessage = { sender: "You", text: input };
+    const formattedMessage = `${selectedSemesters.join(", ")}: ${input} `;
+
+    const userMessage = { sender: "You", text: formattedMessage };
     setMessages((prev) => [...prev, userMessage]);
     setTimeout(() => setInput(""), 0);
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:5000/api/advising",
-        { query: formattedMessage },
-        { timeout: 30000 }
+        "http://127.0.0.1:5000/api/advising/query",
+        { query: input },
+        { timeout: 60000 }
       );
-      let text = response.data.response.response;
-
-      if (
-        (typeof response.data.response === "string" &&
-          response.data.response.includes("An error occurred:")) ||
-        (typeof response.data.response?.response === "string" &&
-          response.data.response.response.includes("An error occurred:"))
-      ) {
-        text = "An error occurred. Please try again.";
-      } else if (!response.data.response?.rag_context) {
-        text = "Sorry! No relevant data in the database.";
+      let finalResponse = response.data.final_response;
+      if (!finalResponse || finalResponse.includes("An error occurred")) {
+        finalResponse =
+          "An error occurred processing your email. Please try again.";
       }
-      setMessages((prev) => [...prev, { sender: "Bot", text }]);
+      // Render only one bot message with the final combined response.
+      setMessages((prev) => [...prev, { sender: "Bot", text: finalResponse }]);
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error processing email:", error);
       setMessages((prev) => [
         ...prev,
-        { sender: "Bot", text: "Error getting response. Please try again." },
+        { sender: "Bot", text: "Error processing email. Please try again." },
       ]);
     }
   };
@@ -62,7 +57,8 @@ function Chatbot() {
       );
       let finalResponse = response.data.final_response;
       if (!finalResponse || finalResponse.includes("An error occurred")) {
-        finalResponse = "An error occurred processing your email. Please try again.";
+        finalResponse =
+          "An error occurred processing your email. Please try again.";
       }
       // Render only one bot message with the final combined response.
       setMessages((prev) => [...prev, { sender: "Bot", text: finalResponse }]);
@@ -98,10 +94,21 @@ function Chatbot() {
 
   return (
     <div className="chat-container">
-      <div className="chat-box" ref={chatBoxRef} style={{ height: chatBoxHeight }}>
+      <div
+        className="chat-box"
+        ref={chatBoxRef}
+        style={{ height: chatBoxHeight }}
+      >
         {messages.map((msg, index) => (
-          <div key={index} className={`message ${msg.sender === "You" ? "user" : "bot"}`}>
-            {msg.sender === "You" ? <div>{msg.text}</div> : <Markdown>{msg.text}</Markdown>}
+          <div
+            key={index}
+            className={`message ${msg.sender === "You" ? "user" : "bot"}`}
+          >
+            {msg.sender === "You" ? (
+              <div>{msg.text}</div>
+            ) : (
+              <Markdown>{msg.text}</Markdown>
+            )}
           </div>
         ))}
       </div>

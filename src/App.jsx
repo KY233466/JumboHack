@@ -12,7 +12,7 @@ function Chatbot() {
 
   const sendMessage = async () => {
     if (!input.trim()) return;
-
+    // hello!
     // const formattedMessage = `${selectedSemesters.join(", ")}: ${input} `;
     const formattedMessage = input;
 

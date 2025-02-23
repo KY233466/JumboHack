@@ -28,15 +28,15 @@ function Chatbot() {
       let finalResponse = response.data.final_response;
       if (!finalResponse || finalResponse.includes("An error occurred")) {
         finalResponse =
-          "An error occurred processing your email. Please try again.";
+          "An error occurred processing your query. Please try again.";
       }
       // Render only one bot message with the final combined response.
       setMessages((prev) => [...prev, { sender: "Bot", text: finalResponse }]);
     } catch (error) {
-      console.error("Error processing email:", error);
+      console.error("Error processing query:", error);
       setMessages((prev) => [
         ...prev,
-        { sender: "Bot", text: "Error processing email. Please try again." },
+        { sender: "Bot", text: "Error processing query. Please try again." },
       ]);
     }
   };

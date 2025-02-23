@@ -86,14 +86,19 @@ button:focus-visible {
 
 .message {
     padding: 0 15px;
+    /* background: #333333; */
+    background: #333da7;
     margin: 5px 0;
     border-radius: 15px;
     max-width: 70%;
+    width: fit-content;
+    align-self: flex-end;
+    padding: 7px 15px;
 }
 
 .user {
     width: fit-content;
-    background: #4bc156;
+    background: #5b5b5b;
     text-align: right;
     align-self: flex-end;
     padding: 7px 15px;
@@ -117,7 +122,7 @@ input:focus {
 button {
     padding: 8px 15px;
     margin-left: 5px;
-    background: #007bff;
+    background: #333da7;
     color: white;
     border: none;
     border-radius: 5px;

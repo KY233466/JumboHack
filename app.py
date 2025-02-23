@@ -207,9 +207,9 @@ def process_query():
     system_prompt = """
         #### Instructions ####
         You are an academic advisor bot helping students with school policy questions. Your response should be in
-        markdown and be structured with:
-        1. A **one-sentence summary** that directly answers the student's question.
-        2. A **detailed explanation** following the summary.
+        PLAIN TEXT and be structured with:
+        1. A one-sentence plain-text summary that directly answers the student's question.
+        2. A plain-text detailed explanation following the summary.
         
         Strict Rules:
         1. Do not repeat the question back to the student.
@@ -217,13 +217,16 @@ def process_query():
            is needed to form a conclusion, ask the student for clarification. List the possible conclusions 
            depending on student responses.
         3. If ONLY conclusion is still reached with rule #2, ask the student to email their advisors.
-        4. The summary must be **one sentence** that highlights the key answer.
+        4. The summary must be one sentence that highlights the key answer.
         5. If the [Explanation] is too long, break it down into paragraphs. Make sure that the transition is 
            smooth and each paragraph talks about different ideas.
         6. Maintain a professional yet approachable tone and make the sentences clear and concise. If the student 
            expresses stress or concern, respond with empathy.
         7. Ensure the response is formal but not excessively rigid.
         8. Only use information from the provided materials — avoid assumptions.
+        9. Your response must be ONLY PLAIN TEXT.
+        10. Start a new paragraph when you get to the detailed response. The summary will be one paragraph and the
+            the detailed response will be another.
     """
 
     # Generate individual answers.
@@ -258,9 +261,7 @@ def process_query():
 You are a chatbot responding to student questions based on provided materials.
 Please combine the following responses into one coherent, formatted response that follows this format exactly:
 
----
 {{Reply}}
----
 
 Guidelines:
 1. If no conclusion could be drawn from the information, say so. If more information from the student 

@@ -9,8 +9,10 @@ const CustomInput = forwardRef(({input, setInput, selectedSemesters, setSelected
             <div style={{width: "100%", backgroundColor: "#1c1c1c", borderRadius: "15px"}}>
                 <div style={{margin: '10px 10px 0', color: '#a8a8a8'}}>
                     <div>
-                        Make it a question! Include both the topic and your intention. "How does pass/fail grading
-                        work?"
+                        Hey this is Alice! I'm here to answer your questions. 
+                    </div>
+                    <div>
+                    Include both the topic and your intention. "How does pass/fail grading work?"
                         instead of just "pass/fail"
                     </div>
                     <div>Select all semesters that apply *</div>

@@ -13,7 +13,8 @@ function Chatbot() {
   const sendMessage = async () => {
     if (!input.trim()) return;
 
-    const formattedMessage = `${selectedSemesters.join(", ")}: ${input} `;
+    // const formattedMessage = `${selectedSemesters.join(", ")}: ${input} `;
+    const formattedMessage = input;
 
     const userMessage = { sender: "You", text: formattedMessage };
     setMessages((prev) => [...prev, userMessage]);
@@ -104,11 +105,8 @@ function Chatbot() {
             key={index}
             className={`message ${msg.sender === "You" ? "user" : "bot"}`}
           >
-            {msg.sender === "You" ? (
-              <div>{msg.text}</div>
-            ) : (
-              <Markdown>{msg.text}</Markdown>
-            )}
+            <div>{msg.text}</div>
+
           </div>
         ))}
       </div>
@@ -120,9 +118,9 @@ function Chatbot() {
         setSelectedSemesters={setSelectedSemesters}
         sendMessage={sendMessage}
       />
-      <div style={{ margin: "10px" }}>
+      {/* <div style={{ margin: "10px" }}>
         <button onClick={sendEmail}>Send Email</button>
-      </div>
+      </div> */}
     </div>
   );
 }

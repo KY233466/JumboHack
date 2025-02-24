@@ -1,130 +1,130 @@
 :root {
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
 
-    color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
 
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
-    font-weight: 500;
-    color: #646cff;
-    text-decoration: inherit;
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
 }
 
 a:hover {
-    color: #535bf2;
+  color: #535bf2;
 }
 
 body {
-    margin: 0;
-    display: flex;
-    place-items: center;
-    min-width: 320px;
-    min-height: 100vh;
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
 }
 
 h1 {
-    font-size: 3.2em;
-    line-height: 1.1;
+  font-size: 3.2em;
+  line-height: 1.1;
 }
 
 button {
-    border-radius: 8px;
-    border: 1px solid transparent;
-    padding: 0.6em 1.2em;
-    font-size: 1em;
-    font-weight: 500;
-    font-family: inherit;
-    background-color: #1a1a1a;
-    cursor: pointer;
-    transition: border-color 0.25s;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
 }
 
 button:hover {
-    border-color: #646cff;
+  border-color: #646cff;
 }
 
 button:focus,
 button:focus-visible {
-    outline: 4px auto -webkit-focus-ring-color;
+  outline: 4px auto -webkit-focus-ring-color;
 }
 
 @media (prefers-color-scheme: light) {
-    :root {
-        color: #213547;
-        background-color: #ffffff;
-    }
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
 
-    a:hover {
-        color: #747bff;
-    }
+  a:hover {
+    color: #747bff;
+  }
 
-    button {
-        background-color: #f9f9f9;
-    }
+  button {
+    background-color: #f9f9f9;
+  }
 }
 
 .chat-container {
-    width: 100vw;
-    height: 100vh;
+  width: 100vw;
+  height: 100vh;
 }
 
 .chat-box {
-    overflow-y: auto;
-    padding: 20px 5vw 0;
-    display: flex;
-    flex-direction: column;
+  overflow-y: auto;
+  padding: 20px 5vw 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .message {
-    padding: 0 15px;
-    /* background: #333333; */
-    background: #333da7;
-    margin: 5px 0;
-    border-radius: 15px;
-    max-width: 70%;
-    width: fit-content;
-    align-self: flex-end;
-    padding: 7px 15px;
+  padding: 0 15px;
+  /* background: #333333; */
+  background: #333da7;
+  margin: 5px 0;
+  border-radius: 15px;
+  max-width: 70%;
+  width: fit-content;
+  align-self: flex-end;
+  padding: 7px 15px;
 }
 
 .user {
-    width: fit-content;
-    background: #5b5b5b;
-    text-align: right;
-    align-self: flex-end;
-    padding: 7px 15px;
+  width: fit-content;
+  background: #5b5b5b;
+  text-align: right;
+  align-self: flex-end;
+  padding: 7px 15px;
 }
 
 .bot {
-    align-self: flex-start;
+  align-self: flex-start;
 }
 
 .input-container {
-    margin: 5px 5vw;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
+  margin: 5px 5vw;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
 }
 
 input:focus {
-    outline: none !important;
+  outline: none !important;
 }
 
 button {
-    padding: 8px 15px;
-    margin-left: 5px;
-    background: #333da7;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  padding: 8px 15px;
+  margin-left: 5px;
+  background: #333da7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }

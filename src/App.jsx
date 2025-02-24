@@ -24,7 +24,7 @@ function Chatbot() {
       const response = await axios.post(
         "http://127.0.0.1:5000/api/advising/query",
         { query: input },
-        { timeout: 60000 }
+        { timeout: 60000 },
       );
       let finalResponse = response.data.final_response;
       if (!finalResponse || finalResponse.includes("An error occurred")) {
@@ -54,7 +54,7 @@ function Chatbot() {
       const response = await axios.post(
         "http://127.0.0.1:5000/api/advising/batch",
         { email: input },
-        { timeout: 60000 }
+        { timeout: 60000 },
       );
       let finalResponse = response.data.final_response;
       if (!finalResponse || finalResponse.includes("An error occurred")) {
@@ -106,7 +106,6 @@ function Chatbot() {
             className={`message ${msg.sender === "You" ? "user" : "bot"}`}
           >
             <div>{msg.text}</div>
-
           </div>
         ))}
       </div>

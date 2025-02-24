@@ -3,10 +3,10 @@
 
 // <SettingsSnippet>
 const settings = {
-  clientId: "2f7cd42d-64a8-40c3-a2ec-26e67e327f71",
-  tenantId: "common",
+  clientId: '2f7cd42d-64a8-40c3-a2ec-26e67e327f71',
+  tenantId: 'common',
   // graphUserScopes: ["user.read", "mail.read", "mail.send"],
-  graphUserScopes: ["user.read", "mail.read", "Mail.ReadWrite"],
+  graphUserScopes: ['user.read', 'mail.read', 'Mail.ReadWrite'],
 };
 
 export default settings;

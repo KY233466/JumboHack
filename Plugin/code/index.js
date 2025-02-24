@@ -4,7 +4,7 @@
 // <ProgramSnippet>
 // import { keyInSelect } from "readline-sync";
 
-import settings from "./appSettings.js";
+import settings from './appSettings.js';
 import {
   initializeGraphForUserAuth,
   getUserAsync,
@@ -14,10 +14,10 @@ import {
   makeGraphCallAsync,
   // makeDraft,
   replyToMessage,
-} from "./graphHelper.js";
+} from './graphHelper.js';
 
 async function main() {
-  console.log("JavaScript Graph Tutorial");
+  console.log('JavaScript Graph Tutorial');
 
   // Initialize Graph
   initializeGraph(settings);
@@ -30,7 +30,7 @@ async function main() {
     try {
       await lol();
     } catch (error) {
-      console.error("Error in periodic execution:", error);
+      console.error('Error in periodic execution:', error);
     }
   }, 3000);
 }
@@ -46,7 +46,7 @@ async function lol() {
     const filteredEmails = [];
 
     emails.forEach((e) => {
-      if (e.from?.emailAddress?.address.endsWith("@tufts.edu") && !e.isRead) {
+      if (e.from?.emailAddress?.address.endsWith('@tufts.edu') && !e.isRead) {
         filteredEmails.push(e);
       }
     });
@@ -58,13 +58,13 @@ async function lol() {
       const content = filteredEmails[0].bodyPreview;
 
       if (id) {
-        console.log("Sending reply...");
+        console.log('Sending reply...');
         await replyToMessage(id, content);
       } else {
-        console.log("No valid email ID found.");
+        console.log('No valid email ID found.');
       }
     } else {
-      console.log("No matching emails to reply to.");
+      console.log('No matching emails to reply to.');
     }
   } catch (err) {
     console.log(`Error getting user's inbox: ${err}`);
@@ -90,7 +90,7 @@ async function greetUserAsync() {
     console.log(`Hello, ${user?.displayName}!`);
     // For work/school accounts, email is in mail property
     // Personal accounts, email is in userPrincipalName
-    console.log(`Email: ${user?.mail ?? user?.userPrincipalName ?? ""}`);
+    console.log(`Email: ${user?.mail ?? user?.userPrincipalName ?? ''}`);
   } catch (err) {
     console.log(`Error getting user: ${err}`);
   }

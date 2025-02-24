@@ -2,11 +2,11 @@
 // Licensed under the MIT license.
 
 // <UserAuthConfigSnippet>
-import "isomorphic-fetch";
-import { DeviceCodeCredential } from "@azure/identity";
-import { Client } from "@microsoft/microsoft-graph-client";
-import axios from "axios";
-import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials/index.js";
+import 'isomorphic-fetch';
+import { DeviceCodeCredential } from '@azure/identity';
+import { Client } from '@microsoft/microsoft-graph-client';
+import axios from 'axios';
+import { TokenCredentialAuthenticationProvider } from '@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials/index.js';
 
 let _settings = undefined;
 let _deviceCodeCredential = undefined;
@@ -15,7 +15,7 @@ let _userClient = undefined;
 export function initializeGraphForUserAuth(settings, deviceCodePrompt) {
   // Ensure settings isn't null
   if (!settings) {
-    throw new Error("Settings cannot be undefined");
+    throw new Error('Settings cannot be undefined');
   }
 
   _settings = settings;
@@ -30,7 +30,7 @@ export function initializeGraphForUserAuth(settings, deviceCodePrompt) {
     _deviceCodeCredential,
     {
       scopes: settings.graphUserScopes,
-    }
+    },
   );
 
   _userClient = Client.initWithMiddleware({
@@ -43,7 +43,7 @@ export function initializeGraphForUserAuth(settings, deviceCodePrompt) {
 export async function getUserTokenAsync() {
   // Ensure credential isn't undefined
   if (!_deviceCodeCredential) {
-    throw new Error("Graph has not been initialized for user auth");
+    throw new Error('Graph has not been initialized for user auth');
   }
 
   // Ensure scopes isn't undefined
@@ -53,7 +53,7 @@ export async function getUserTokenAsync() {
 
   // Request token with given scopes
   const response = await _deviceCodeCredential.getToken(
-    _settings?.graphUserScopes
+    _settings?.graphUserScopes,
   );
   return response.token;
 }
@@ -63,13 +63,13 @@ export async function getUserTokenAsync() {
 export async function getUserAsync() {
   // Ensure client isn't undefined
   if (!_userClient) {
-    throw new Error("Graph has not been initialized for user auth");
+    throw new Error('Graph has not been initialized for user auth');
   }
 
   // Only request specific properties with .select()
   return _userClient
-    .api("/me")
-    .select(["displayName", "mail", "userPrincipalName"])
+    .api('/me')
+    .select(['displayName', 'mail', 'userPrincipalName'])
     .get();
 }
 // </GetUserSnippet>
@@ -78,35 +78,24 @@ export async function getUserAsync() {
 export async function getInboxAsync() {
   // Ensure client isn't undefined
   if (!_userClient) {
-    throw new Error("Graph has not been initialized for user auth");
+    throw new Error('Graph has not been initialized for user auth');
   }
 
   return (
     _userClient
-      .api("/me/mailFolders/inbox/messages")
+      .api('/me/mailFolders/inbox/messages')
       // .select(['from', 'isRead', 'receivedDateTime', 'subject'])
       // .filter("startsWith(subject,'Test')")
       .top(6)
-      .orderby("receivedDateTime DESC")
+      .orderby('receivedDateTime DESC')
       .get()
   );
 }
-// </GetInboxSnippet>
 
-export async function getDraftEmails(id) {
-  // Ensure client isn't undefined
-  if (!_userClient) {
-    throw new Error("Graph has not been initialized for user auth");
-  }
-
-  return _userClient.api("/me/mailFolders/Drafts/messages").top(4).get();
-}
-
-// <SendMailSnippet>
 export async function sendMailAsync(subject, body, recipient) {
   // Ensure client isn't undefined
   if (!_userClient) {
-    throw new Error("Graph has not been initialized for user auth");
+    throw new Error('Graph has not been initialized for user auth');
   }
 
   // Create a new message
@@ -125,10 +114,10 @@ export async function sendMailAsync(subject, body, recipient) {
     //   ],
     // };
     // {
-    subject: "Test Email",
+    subject: 'Test Email',
     body: {
-      contentType: "Text",
-      content: "Hello, this is a test email.",
+      contentType: 'Text',
+      content: 'Hello, this is a test email.',
     },
     toRecipients: [
       {
@@ -140,7 +129,7 @@ export async function sendMailAsync(subject, body, recipient) {
   };
 
   // Send the message
-  return _userClient.api("me/sendMail").post({
+  return _userClient.api('me/sendMail').post({
     message: message,
   });
 }
@@ -148,21 +137,21 @@ export async function sendMailAsync(subject, body, recipient) {
 export async function editDraftEmail(id, reply) {
   // Ensure client isn't undefined
   if (!_userClient) {
-    throw new Error("Graph has not been initialized for user auth");
+    throw new Error('Graph has not been initialized for user auth');
   }
 
-  const header = "Hi Katie,\n\n";
-  const ender = "\n\nBest,\nGwen";
+  const header = 'Hi Katie,\n\n';
+  const ender = '\n\nBest,\nGwen';
   const finalReply = header + reply + ender;
 
   const message = {
     body: {
-      contentType: "Text",
+      contentType: 'Text',
       content: finalReply,
     },
   };
 
-  const path = "/me/messages/" + id;
+  const path = '/me/messages/' + id;
 
   await _userClient.api(path).update(message);
 }
@@ -170,36 +159,36 @@ export async function editDraftEmail(id, reply) {
 export async function replyToMessage(id, content) {
   // Ensure client isn't undefined
   if (!_userClient) {
-    throw new Error("Graph has not been initialized for user auth");
+    throw new Error('Graph has not been initialized for user auth');
   }
 
-  const path = "/me/messages/" + id + "/createReply";
+  const path = '/me/messages/' + id + '/createReply';
 
   // Send the message
   const result = await _userClient
     .api(path)
-    .post({ comment: "Generating reply..." });
-  let finalReply = "";
+    .post({ comment: 'Generating reply...' });
+  let finalReply = '';
 
   try {
-    console.log("start to get reply");
+    console.log('start to get reply');
     const response = await axios.post(
-      "http://127.0.0.1:5000/api/advising/batch",
+      'http://127.0.0.1:5000/api/advising/batch',
       { email: content },
-      { timeout: 60000 }
+      { timeout: 60000 },
     );
     let finalResponse = response.data.final_response;
-    if (!finalResponse || finalResponse.includes("An error occurred")) {
+    if (!finalResponse || finalResponse.includes('An error occurred')) {
       finalResponse =
-        "An error occurred processing your query. Please try again.";
+        'An error occurred processing your query. Please try again.';
     }
     finalReply = finalResponse;
 
-    console.log("reply fetched");
+    console.log('reply fetched');
 
     return editDraftEmail(result.id, finalReply);
   } catch (error) {
-    console.error("Error processing query:", error);
+    console.error('Error processing query:', error);
     return false;
   }
 }
